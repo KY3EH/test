@@ -2,8 +2,8 @@ package com.alma.commontest;
 
 import com.alma.commontest.tools.Tools;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.Scanner;
-import java.util.logging.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,6 +12,7 @@ public class App extends Thread
 	private static final char	COMMAND_PREFIX	= '-';
 	private static final String	COMMAND_EXIT	= "-exit";
 	private static final String	COMMAND_BASE64	= "-base64";
+	private static final String	COMMAND_DATE	= "-date";
 	private static final Logger	LOG				= LogManager.getLogger( App.class );
 
 	public static void main( String[] args_ ) throws InterruptedException
@@ -114,6 +115,13 @@ public class App extends Thread
 				
 			}
 
+		}
+		else if( COMMAND_DATE.equalsIgnoreCase( input_ ) )
+		{
+			String	date	= Tools.FormatDate( new Date() );
+			
+			System.err.println( date );
+				
 		}
 		
 		LOG.exit( result );
