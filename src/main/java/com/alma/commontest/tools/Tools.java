@@ -1,11 +1,23 @@
 package com.alma.commontest.tools;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.xml.bind.DatatypeConverter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -13,18 +25,56 @@ import javax.xml.bind.DatatypeConverter;
  */
 public abstract class Tools
 {
-	public static void TestSwitc( int value_ )
+	private static final Logger	LOG				= LogManager.getLogger( Tools.class );
+	
+	private static final int	BUFFER_SIZE		= 1024;
+	
+	public static void CopyFile( String sourceFile_, String destinationFile_ ) throws FileNotFoundException, IOException
 	{
-		switch( value_ )
-		{
-		case 1:
-			break;
+		LOG.entry( sourceFile_, destinationFile_);
 			
-		default:
-			break;
+		byte[]		buffer	= new byte[ BUFFER_SIZE ];
+		InputStream	source	= new FileInputStream( sourceFile_ );
+		
+		try
+		{
+			OutputStream	destination	= new FileOutputStream( destinationFile_ );
+			
+			try
+			{
+				while( true )
+				{
+					int	count	= source.read( buffer );
+
+					if( count < 0 )
+					{
+						break;
+						
+					}
+					else
+					{
+						destination.write( buffer, 0, count );
+						
+					}
+					
+				}
+				
+			}
+			finally
+			{
+				destination.close();
+
+			}
+
+		}
+		finally
+		{
+			source.close();
 			
 		}
 		
+		LOG.exit();
+
 	}
 	
 	public static void TestBase64() throws NoSuchAlgorithmException
@@ -37,6 +87,27 @@ public abstract class Tools
 		
 		System.err.println( buffer );
 
+	}
+	
+	public static float TestFloat( float source_ ) throws IOException
+	{
+		LOG.entry( source_ );
+		
+		ByteArrayOutputStream	buffer	= new ByteArrayOutputStream( Float.SIZE );
+		DataOutputStream		writer	= new DataOutputStream( buffer );
+		
+		writer.writeFloat( source_ );
+		writer.close();
+		
+		byte[]					floatData	= buffer.toByteArray();
+		ByteArrayInputStream	converter	= new ByteArrayInputStream( floatData );
+		DataInputStream			reader		= new DataInputStream( converter );
+		float					result		= reader.readFloat();
+		
+		LOG.exit( result );
+		
+		return result;
+		
 	}
 	
 	private static final String	DATE_FORMAT_ND	= "EEE d'nd' MMMM";

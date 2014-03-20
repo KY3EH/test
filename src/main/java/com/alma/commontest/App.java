@@ -1,6 +1,7 @@
 package com.alma.commontest;
 
 import com.alma.commontest.tools.Tools;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Scanner;
@@ -13,9 +14,11 @@ public class App extends Thread
 	private static final String	COMMAND_EXIT	= "-exit";
 	private static final String	COMMAND_BASE64	= "-base64";
 	private static final String	COMMAND_DATE	= "-date";
+	private static final String	COMMAND_FLOAT	= "-float";
+	private static final String	COMMAND_COPY	= "-copy";
 	private static final Logger	LOG				= LogManager.getLogger( App.class );
 
-	public static void main( String[] args_ ) throws InterruptedException
+	public static void main( String[] args_ ) throws Exception
 	{
 		LOG.entry();
 		
@@ -91,9 +94,9 @@ public class App extends Thread
 
 	}
 
-	private static boolean ParseCommand( String input_ )
+	private static boolean ParseCommand( String input_ ) throws IOException
 	{
-		LOG.entry();
+		LOG.entry( input_ );
 		
 		boolean	result	= true;
 
@@ -121,6 +124,19 @@ public class App extends Thread
 			String	date	= Tools.FormatDate( new Date() );
 			
 			System.err.println( date );
+				
+		}
+		else if( COMMAND_FLOAT.equalsIgnoreCase( input_ ) )
+		{
+			float	source	= (float)Math.random();
+			float	rc		= Tools.TestFloat( source );
+			
+			System.out.println( "Test float: source is " + Float.toString( source ) + ", result is " + Float.toString( rc ) );
+				
+		}
+		else if( COMMAND_COPY.equalsIgnoreCase( input_ ) )
+		{
+			Tools.CopyFile( "pom.xml", "pom.bak" );
 				
 		}
 		
