@@ -18,10 +18,12 @@ public class StarPerTime implements Runnable
 		long	starCount	= m_starCount.incrementAndGet();
 		
 		System.out.print( "*" );
+		System.out.flush();
 		
 		if( 0 == starCount % m_startPerLine )
 		{
 			System.out.println();
+			System.out.flush();
 			
 		}
 		
