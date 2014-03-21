@@ -1,6 +1,7 @@
 package com.alma.commontest;
 
 import com.alma.commontest.tools.Tools;
+import com.alma.framework.impl.StarPerTime;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
@@ -16,6 +17,8 @@ public class App extends Thread
 	private static final String	COMMAND_DATE	= "-date";
 	private static final String	COMMAND_FLOAT	= "-float";
 	private static final String	COMMAND_COPY	= "-copy";
+	private static final String	COMMAND_START	= "-start";
+	private static final String	COMMAND_STOP	= "-stop";
 	private static final Logger	LOG				= LogManager.getLogger( App.class );
 
 	public static void main( String[] args_ ) throws Exception
@@ -94,6 +97,20 @@ public class App extends Thread
 
 	}
 
+	private static StarPerTime	s_stub	= null;
+	
+	private static void StopStub()
+	{
+		if( null != s_stub )
+		{
+			s_stub.Stop();
+
+			s_stub	= null;
+
+		}
+		
+	}
+	
 	private static boolean ParseCommand( String input_ ) throws IOException
 	{
 		LOG.entry( input_ );
@@ -102,6 +119,7 @@ public class App extends Thread
 
 		if( COMMAND_EXIT.equalsIgnoreCase( input_ ) )
 		{
+			StopStub();
 			result = false;
 
 		}
@@ -133,6 +151,18 @@ public class App extends Thread
 			
 			System.out.println( "Test float: source is " + Float.toString( source ) + ", result is " + Float.toString( rc ) );
 				
+		}
+		else if( COMMAND_START.equalsIgnoreCase( input_ ) )
+		{
+			s_stub	= new StarPerTime( 500, 60 );
+			
+			s_stub.Start();
+
+		}
+		else if( COMMAND_STOP.equalsIgnoreCase( input_ ) )
+		{
+			StopStub();
+
 		}
 		else if( COMMAND_COPY.equalsIgnoreCase( input_ ) )
 		{
