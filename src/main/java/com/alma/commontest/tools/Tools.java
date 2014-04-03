@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.crypto.KeyGenerator;
@@ -165,6 +166,32 @@ public abstract class Tools
 		
 		return result;
 		
+	}
+	
+	private static final String FORMAT	= "0.000000000000";
+	
+	public static void TestXinX()
+	{
+		DecimalFormat	format	= new DecimalFormat( FORMAT );
+		
+		for( double i  = 1 ; i > 1d / 1000000000000d ; i /= 10 )
+		{
+			double	result	= Math.pow( i, i );
+			
+			String	print	= format.format( result );
+			String	value	= format.format( i );
+			
+			System.out.println( value + "\t" + print );
+			
+		}
+		
+		double	result	= Math.pow( 0d, 0d );
+
+		String	print	= format.format( result );
+		String	value	= format.format( 0 );
+
+			System.out.println( value + "\t" + print );
+			
 	}
 	
 	private Tools()

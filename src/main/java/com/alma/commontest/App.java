@@ -18,6 +18,7 @@ public class App extends Thread
 	private static final String	COMMAND_FLOAT	= "-float";
 	private static final String	COMMAND_COPY	= "-copy";
 	private static final String	COMMAND_START	= "-start";
+	private static final String	COMMAND_XINX	= "-xinx";
 	private static final String	COMMAND_STOP	= "-stop";
 	private static final Logger	LOG				= LogManager.getLogger( App.class );
 
@@ -162,6 +163,11 @@ public class App extends Thread
 		else if( COMMAND_STOP.equalsIgnoreCase( input_ ) )
 		{
 			StopStub();
+
+		}
+		else if( COMMAND_XINX.equalsIgnoreCase( input_ ) )
+		{
+			Tools.TestXinX();
 
 		}
 		else if( COMMAND_COPY.equalsIgnoreCase( input_ ) )
