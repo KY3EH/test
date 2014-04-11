@@ -1,5 +1,9 @@
 package com.alma.commontest.tools;
 
+import com.alma.framework.impl.listener.ListenerItf;
+import com.alma.framework.impl.listener.ListenerNotifier;
+import com.alma.framework.impl.listener.TestLisener;
+import com.alma.framework.impl.listener.TrackerServiceItf;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -87,6 +91,29 @@ public abstract class Tools
 		byte[]			supposedSymKey	= DatatypeConverter.parseBase64Binary( buffer );
 		
 		System.err.println( buffer );
+
+	}
+	
+	public static void TestListener()
+	{
+		TrackerServiceItf	service		= new ListenerNotifier();
+		ListenerItf			listener1	= new TestLisener();
+		ListenerItf			listener2	= new TestLisener();
+		
+		for( int i = 0 ; i < 3 ; ++i )
+		{
+			service.AddListener( listener1 );
+			service.AddListener( listener2 );
+			
+		}
+		
+		for( int i = 0 ; i < 3 ; ++i )
+		{
+			service.RemoveListener( listener1 );
+			service.RemoveListener( listener2 );
+			
+		}
+		
 
 	}
 	

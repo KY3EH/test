@@ -20,6 +20,7 @@ public class App extends Thread
 	private static final String	COMMAND_START	= "-start";
 	private static final String	COMMAND_XINX	= "-xinx";
 	private static final String	COMMAND_STOP	= "-stop";
+	private static final String	COMMAND_LISTENER= "-listener";
 	private static final Logger	LOG				= LogManager.getLogger( App.class );
 
 	public static void main( String[] args_ ) throws Exception
@@ -174,6 +175,11 @@ public class App extends Thread
 		{
 			Tools.CopyFile( "pom.xml", "pom.bak" );
 				
+		}
+		else if( COMMAND_LISTENER.equalsIgnoreCase( input_ ) )
+		{
+			Tools.TestListener();
+
 		}
 		
 		LOG.exit( result );
