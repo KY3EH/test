@@ -2,6 +2,7 @@ package com.alma.commontest;
 
 import com.alma.commontest.tools.Tools;
 import com.alma.framework.impl.StarPerTime;
+import com.alma.framework.impl.classinit.TestInitialize;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
@@ -21,6 +22,7 @@ public class App extends Thread
 	private static final String	COMMAND_XINX	= "-xinx";
 	private static final String	COMMAND_STOP	= "-stop";
 	private static final String	COMMAND_LISTENER= "-listener";
+	private static final String	COMMAND_INIT	= "-init";
 	private static final Logger	LOG				= LogManager.getLogger( App.class );
 
 	public static void main( String[] args_ ) throws Exception
@@ -179,6 +181,12 @@ public class App extends Thread
 		else if( COMMAND_LISTENER.equalsIgnoreCase( input_ ) )
 		{
 			Tools.TestListener();
+
+		}
+		else if( COMMAND_INIT.equalsIgnoreCase( input_ ) )
+		{
+			TestInitialize	instance1	= new TestInitialize( 1 );
+			TestInitialize	instance2	= new TestInitialize( 2 );
 
 		}
 		
