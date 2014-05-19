@@ -94,6 +94,18 @@ public abstract class Tools
 
 	}
 	
+	public static void Log( double basis_ )
+	{
+		for( int i = 1 ; i < 101 ; ++i )
+		{
+			double	value	= Math.log( i ) / Math.log( basis_ );
+			
+			System.out.println( Integer.toString( i ) +  "\t-\t" + Double.toString( value ) );
+			
+		}
+		
+	}
+	
 	public static void TestListener()
 	{
 		TrackerServiceItf	service		= new ListenerNotifier();
