@@ -24,10 +24,9 @@ public class App extends Thread
 	private static final String	COMMAND_LISTENER= "-listener";
 	private static final String	COMMAND_INIT	= "-init";
 	private static final String	COMMAND_LOG		= "-log";
+	private static final String	COMMAND_ANONYM	= "-anonym";
 	private static final Logger	LOG				= LogManager.getLogger( App.class );
 
-	private static final double	LOG_BASIS		= Math.pow( 99.0, 1.0/10.0 );
-	
 	public static void main( String[] args_ ) throws Exception
 	{
 		LOG.entry();
@@ -161,7 +160,7 @@ public class App extends Thread
 		}
 		else if( COMMAND_LOG.equalsIgnoreCase( input_ ) )
 		{
-			Tools.Log( LOG_BASIS );
+			Tools.Log();
 			
 		}
 		else if( COMMAND_START.equalsIgnoreCase( input_ ) )
@@ -179,6 +178,11 @@ public class App extends Thread
 		else if( COMMAND_XINX.equalsIgnoreCase( input_ ) )
 		{
 			Tools.TestXinX();
+
+		}
+		else if( COMMAND_ANONYM.equalsIgnoreCase( input_ ) )
+		{
+			Tools.TestAnonymousObject( "Test" );
 
 		}
 		else if( COMMAND_COPY.equalsIgnoreCase( input_ ) )

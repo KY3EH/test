@@ -18,6 +18,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.xml.bind.DatatypeConverter;
@@ -94,15 +95,57 @@ public abstract class Tools
 
 	}
 	
-	public static void Log( double basis_ )
+	private static final double	LINEAR			= 20.0;
+	private static final double	LOG_BASIS		= Math.pow( (99.0 + LINEAR)/LINEAR, 1.0/10.0 ); //Root 
+	
+	public static void Log()
 	{
-		for( int i = 1 ; i < 101 ; ++i )
+		for( int i = 0 ; i < 100 ; ++i )
 		{
-			double	value	= Math.log( i ) / Math.log( basis_ );
+			int	value	= (int)Math.round( Math.log( (i + LINEAR ) / LINEAR ) / Math.log( LOG_BASIS ) );
 			
-			System.out.println( Integer.toString( i ) +  "\t-\t" + Double.toString( value ) );
+			System.out.println( Integer.toString( i ) +  "\t-\t" + Integer.toString( value ) );
 			
 		}
+		
+	}
+	
+	public static void TestAnonymousObject( String message_ )
+	{
+		LOG.entry( message_ );
+		
+		final String	testMessage	= message_;
+		
+		Runnable	test	= new Runnable()
+								{
+									@Override
+									public void run()
+									{
+										LOG.entry();
+										LOG.debug( testMessage );
+										LOG.exit();
+											
+									}
+									
+								};
+		
+		Thread	testThread	= new Thread( test );
+		
+		testThread.start();
+		
+		try
+		{
+			testThread.join();
+			
+		}
+		catch( InterruptedException ex_ )
+		{
+			LOG.debug( (String)null, ex_ );
+			
+
+		}
+		
+		LOG.exit();
 		
 	}
 	
