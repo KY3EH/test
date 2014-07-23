@@ -4,7 +4,9 @@ import com.alma.commontest.tools.Tools;
 import com.alma.framework.impl.StarPerTime;
 import com.alma.framework.impl.classinit.TestInitialize;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
@@ -25,6 +27,7 @@ public class App extends Thread
 	private static final String	COMMAND_INIT	= "-init";
 	private static final String	COMMAND_LOG		= "-log";
 	private static final String	COMMAND_ANONYM	= "-anonym";
+	private static final String	COMMAND_DECIMAL	= "-decimal";
 	private static final Logger	LOG				= LogManager.getLogger( App.class );
 
 	public static void main( String[] args_ ) throws Exception
@@ -117,7 +120,7 @@ public class App extends Thread
 		
 	}
 	
-	private static boolean ParseCommand( String input_ ) throws IOException
+	private static boolean ParseCommand( String input_ ) throws IOException, ParseException
 	{
 		LOG.entry( input_ );
 		
@@ -183,6 +186,16 @@ public class App extends Thread
 		else if( COMMAND_ANONYM.equalsIgnoreCase( input_ ) )
 		{
 			Tools.TestAnonymousObject( "Test" );
+
+		}
+		else if( COMMAND_DECIMAL.equalsIgnoreCase( input_ ) )
+		{
+			final String value			= "123,456,789,101,111.3456";
+			final String DECIMAL_FORMAT	= "000,000,000,000,000.0000";
+	
+			BigDecimal	rc	= Tools.getNumberFromFormattedString( DECIMAL_FORMAT, value );
+			
+			System.out.println( "Source:\t" + value + "\nResult:\t" + rc.toString() );
 
 		}
 		else if( COMMAND_COPY.equalsIgnoreCase( input_ ) )

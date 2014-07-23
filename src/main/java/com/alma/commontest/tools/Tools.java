@@ -14,8 +14,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -276,6 +279,18 @@ public abstract class Tools
 			
 	}
 	
+	public static BigDecimal getNumberFromFormattedString( String pattern, String formatAmount ) throws ParseException
+	{
+		DecimalFormat	myFormatter = new DecimalFormat( pattern );
+		
+		myFormatter.setParseBigDecimal( true );
+		
+		BigDecimal	result	= (BigDecimal)myFormatter.parse( formatAmount );
+
+		return result;
+		
+	}
+
 	private Tools()
 	{
 		
